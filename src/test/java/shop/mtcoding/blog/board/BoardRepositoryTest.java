@@ -17,7 +17,22 @@ public class BoardRepositoryTest {
     private BoardRepository boardRepository;
 
     @Test
-    public void selectAll_test(){
+    public void update_test() {
+        String title = "수정 후 제목";
+        String content = "수정 후 내용";
+        int id = 1;
+        //when
+        boardRepository.update(title, content, id);
+        //then
+        Board board = boardRepository.selectOne(id);
+        System.out.println(board);
+    }
+
+
+
+
+    @Test
+    public void selectAll_test() {
         // given
 
         // when
@@ -33,13 +48,12 @@ public class BoardRepositoryTest {
     }
 
 
-
     @Test
-    public void selectOne_test(){
+    public void selectOne_test() {
         //given
-        int id= 1;
+        int id = 1;
         //when
-        Board board =boardRepository.selectOne(id);
+        Board board = boardRepository.selectOne(id);
 
         //then(상태 검사)
 //        System.out.println(board);
@@ -49,7 +63,7 @@ public class BoardRepositoryTest {
     }
 
     @Test
-    public void insert_test(){ // 테스트 메서드는 파라미터가 없다. 리턴도 없다.
+    public void insert_test() { // 테스트 메서드는 파라미터가 없다. 리턴도 없다.
         // given
         String title = "제목10";
         String content = "내용10";

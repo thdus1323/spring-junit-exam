@@ -11,21 +11,31 @@ import java.util.List;
 @RequiredArgsConstructor
 @Repository
 public class BoardRepository {
-    private final EntityManager em;
+        private final EntityManager em;
 
-    public List<Board> selectAll(){
-        Query query = em.createNativeQuery("select * from board_tb", Board.class);
-        List<Board> boardList = query.getResultList(); //못 찾으면 빈 컬렉션을 준다(크기=0)
-        return boardList;
+    @Transactional
+        public void update(String title, String content, int id){
+        Query query = em.createNativeQuery("update board_tb set title=?, content=? where id=?");
+        query.setParameter(1, title);
+        query.setParameter(2, content);
+        query.setParameter(3, id);
+
+        query.executeUpdate();
+
     }
+        public List<Board> selectAll(){
+            Query query = em.createNativeQuery("select * from board_tb", Board.class);
+            List<Board> boardList = query.getResultList(); //못 찾으면 빈 컬렉션을 준다(크기=0)
+            return boardList;
+        }
 
-    public Board selectOne(int id) {
-        Query query = em.createNativeQuery("select * from board_tb where id=?", Board.class);
-        query.setParameter(1, id);
+        public Board selectOne(int id) {
+            Query query = em.createNativeQuery("select * from board_tb where id=?", Board.class);
+            query.setParameter(1, id);
 
-        try {
-            Board board = (Board) query.getSingleResult();
-            return board;
+            try {
+                Board board = (Board) query.getSingleResult();
+                return board;
         } catch (Exception e) {
             return null;
         }
